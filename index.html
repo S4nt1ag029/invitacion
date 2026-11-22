@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#430a18">
+<meta property="og:title" content="Mis 50 años - Maria Aquino">
+<meta property="og:description" content="Estás invitado a celebrar conmigo. Sábado 12 de diciembre, 6:00 pm.">
+<title>Mis 50 Años</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Montserrat:wght@400;500;600&family=Pinyon+Script&display=swap">
+<style>
+/* Layout: una sola columna de invitación (como la referencia): guirnalda de globos, arco de lentejuelas con neón,
+   listón dorado, nombre, mensaje, fecha con cuenta regresiva, banda guinda para confirmar y el boleto con QR.
+   Look único y deliberado (blanco, guinda y dorado): no sigue el tema oscuro del visor. */
+:root{
+  --paper:#fffcf6; --stage:#efe4d6; --ink:#34131c; --ink-soft:#6b4a52;
+  --wine:#6e1128; --wine-deep:#430a18; --wine-glow:#8d1a3a;
+  --gold:#c9a24b; --gold-hi:#f0d995; --gold-deep:#9a7424; --line:#e6d3b0; --ivory:#f8ecd9;
+  --display:'Pinyon Script','Snell Roundhand','Apple Chancery',cursive;
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --sans:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.55 var(--sans);-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.page{max-width:520px;margin:0 auto;overflow-x:clip}
+@media(min-width:640px){
+  body{background:var(--stage);padding-block:28px}
+  .page{background:var(--paper);box-shadow:0 24px 60px -20px rgba(67,10,24,.35);border-radius:6px}
+}
+h1,h2,p{margin:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+/* Guirnaldas */
+.garland{display:block;line-height:0}
+.garland svg{width:100%;height:auto;display:block}
+
+/* Héroe */
+.hero{text-align:center;padding:4px 0 26px}
+.arch{position:relative;width:min(100%,330px);aspect-ratio:3/4;margin:4px auto 0;border-radius:999px 999px 10px 10px;
+  background-color:#4a3310;
+  background-image:linear-gradient(180deg,rgba(40,6,16,.38),rgba(40,6,16,.66)),var(--sequin,none);
+  box-shadow:0 0 0 3px var(--gold),0 0 0 8px var(--paper),0 0 0 10px var(--gold-hi),0 26px 40px -18px rgba(67,10,24,.6);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:52px 12px 26px}
+.neon{font-family:var(--display);font-size:clamp(46px,14vw,66px);line-height:.92;color:#fff8e0;
+  text-shadow:0 0 3px #fff4c8,0 0 10px #f2c35b,0 0 24px #d9a22f,0 0 44px rgba(217,162,47,.6)}
+.neon span{display:block}
+.neon span+span{margin-top:-2px}
+.fifty{font:600 clamp(108px,33vw,148px)/1 var(--sans);letter-spacing:-.03em;color:transparent;-webkit-text-stroke:3px #fff4cf;margin-top:6px;
+  text-shadow:0 0 8px rgba(255,236,170,.9),0 0 22px rgba(236,184,66,.85),0 0 40px rgba(217,162,47,.6)}
+.bf{position:absolute;fill:#ffe7a0;filter:drop-shadow(0 0 7px rgba(247,201,86,.95))}
+.bf-a{left:-20px;top:30%;width:86px;transform:rotate(-14deg)}
+.bf-b{right:-18px;bottom:11%;width:66px;transform:rotate(13deg)}
+@media(prefers-reduced-motion:no-preference){
+  .neon{animation:glow 4s ease-in-out infinite}
+  @keyframes glow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.12)}}
+}
+.ribbon{display:block;width:min(100%,390px);height:auto;margin:-34px auto 0;position:relative;filter:drop-shadow(0 10px 10px rgba(67,10,24,.28))}
+.cta{display:inline-flex;flex-direction:column;align-items:center;gap:8px;margin-top:10px;text-decoration:none;color:var(--wine);
+  font:500 14px/1.3 var(--sans);letter-spacing:.04em}
+.cta i{display:grid;place-items:center;width:50px;height:50px;border-radius:50%;border:2px solid var(--gold);background:#fff;transition:transform .2s}
+.cta:hover i{transform:translateY(2px)}
+.cta svg{width:22px;height:22px;stroke:var(--gold-deep)}
+
+/* Nombre y mensaje */
+.honoree{text-align:center;padding:4px 0 8px}
+.name{font:400 clamp(52px,16vw,74px)/1.05 var(--display);padding:4px 8px;
+  background:linear-gradient(175deg,#a8791f 0%,#e8c86a 45%,#9a7424 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  overflow-wrap:anywhere}
+.emblem{position:relative;width:148px;height:148px;margin:12px auto 0}
+.emblem .ring{position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(from 20deg,#8f6b1c,#f0d995,#c9a24b,#fff3c4,#9a7424,#f0d995,#8f6b1c);box-shadow:0 10px 24px -10px rgba(67,10,24,.55)}
+.emblem .core{position:absolute;inset:8px;border-radius:50%;background:radial-gradient(circle at 34% 28%,var(--wine-glow),var(--wine-deep) 78%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--gold-hi)}
+.emblem b{font:700 58px/1 var(--serif)}
+.emblem small{font:500 11px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase;margin-top:4px;padding-left:.32em}
+.emblem .bf{fill:#e9c25f;filter:drop-shadow(0 0 5px rgba(247,201,86,.8))}
+.emblem .bf-l{left:-64px;top:8px;width:54px;transform:rotate(-18deg)}
+.emblem .bf-r{right:-64px;bottom:6px;width:54px;transform:rotate(16deg)}
+.note{width:min(100%,350px);margin:28px auto 0;padding:30px 26px;text-align:center;background:linear-gradient(180deg,#fcf5e3,#f7ebd0);
+  border:1px solid var(--line);box-shadow:inset 0 0 0 7px #fbf3df,inset 0 0 0 8px var(--gold),0 14px 26px -18px rgba(67,10,24,.5)}
+.note p{font:italic 500 21px/1.5 var(--serif);color:var(--ink)}
+.note p+p{margin-top:12px}
+
+/* Fecha y cuenta regresiva */
+.when{text-align:center;padding:34px 0 8px}
+.dateline{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:0;max-width:360px;margin:0 auto}
+.dateline span{font:500 14px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--wine);padding:0 6px 7px;border-bottom:1px solid var(--gold)}
+.dateline b{font:700 60px/.9 var(--serif);color:var(--wine);padding:0 14px;font-variant-numeric:lining-nums}
+.hour{margin-top:12px;font:600 18px/1.2 var(--sans);letter-spacing:.08em;color:var(--ink)}
+.asks{margin-top:26px;font:italic 500 26px/1 var(--serif);color:var(--gold-deep)}
+.cd{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;max-width:360px;margin:12px auto 0}
+.cd div{background:#fff;border:1px solid var(--gold);border-radius:6px;padding:12px 2px 9px;box-shadow:0 8px 14px -12px rgba(67,10,24,.55)}
+.cd .n{display:block;font:600 38px/1 var(--serif);color:var(--wine);font-variant-numeric:lining-nums tabular-nums}
+.cd .l{display:block;margin-top:6px;font:500 9.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep)}
+.cd-note{margin-top:12px;font:500 14px/1.4 var(--sans);color:var(--wine);min-height:1.4em}
+.cal{display:inline-block;margin-top:10px;font:500 13px/1.3 var(--sans);letter-spacing:.04em;color:var(--wine);text-underline-offset:4px}
+.venue{max-width:360px;margin:30px auto 0;text-align:center;padding-top:24px;border-top:1px solid var(--line)}
+.venue h2{font:500 12px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--gold-deep)}
+.venue p{margin-top:10px;font:600 24px/1.25 var(--serif);color:var(--wine)}
+.venue .addr{font:500 17px/1.4 var(--serif);color:var(--ink-soft);margin-top:4px}
+.venue a{display:inline-block;margin-top:10px;font:500 13px/1.3 var(--sans);color:var(--wine);text-underline-offset:4px}
+
+/* Confirmación */
+.rsvp{margin-top:30px;background:radial-gradient(120% 80% at 50% 0%,#5b0f25 0%,var(--wine-deep) 70%);color:var(--ivory);padding:38px 22px 34px;
+  border-top:3px solid var(--gold);border-bottom:3px solid var(--gold)}
+.rsvp h2{font:400 46px/1.05 var(--display);color:var(--gold-hi);text-align:center}
+.rsvp .lead{margin:12px auto 24px;max-width:34ch;text-align:center;font:500 16px/1.5 var(--sans);color:#f0e0cb}
+.must{margin:0 auto 24px;max-width:36ch;padding:14px 16px;text-align:center;border:1px solid var(--gold-hi);border-radius:8px;background:rgba(240,217,149,.12);
+  font:600 14px/1.5 var(--sans);letter-spacing:.02em;color:var(--gold-hi)}
+.field{border:0;padding:0;margin:0 0 18px;min-width:0}
+.field legend,.field>label{display:block;padding:0;margin-bottom:8px;font:600 12px/1.2 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--gold-hi)}
+.field input[type=text],.field input[type=tel]{width:100%;min-height:50px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font:400 16px/1.3 var(--sans)}
+.field input::placeholder{color:#9b8388}
+.field .opt{text-transform:none;letter-spacing:0;font-weight:400;color:#e2cfb4}
+.seg{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg input{position:absolute;opacity:0;width:1px;height:1px}
+.seg label{display:flex;align-items:center;justify-content:center;text-align:center;min-height:52px;padding:10px 8px;border:1px solid rgba(240,217,149,.55);border-radius:8px;
+  font:500 15px/1.25 var(--sans);color:var(--ivory);cursor:pointer;transition:background .15s,color .15s}
+.seg input:checked+label{background:var(--gold-hi);border-color:var(--gold-hi);color:var(--wine-deep);font-weight:600}
+.seg input:focus-visible+label{outline:3px solid #fff;outline-offset:2px}
+.err{min-height:1.3em;margin:0 0 12px;font:600 14px/1.4 var(--sans);color:#ffd5db}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;padding:14px 18px;border:0;border-radius:999px;cursor:pointer;text-decoration:none;text-align:center;
+  background:linear-gradient(180deg,#f6e3a6,#d9b45a);color:var(--wine-deep);font:600 15px/1.2 var(--sans);letter-spacing:.04em;box-shadow:0 12px 20px -14px rgba(0,0,0,.7)}
+.btn:hover{filter:brightness(1.05)}
+.btn[disabled]{opacity:.6;cursor:progress}
+.btn.ghost{background:transparent;color:var(--gold-hi);border:1px solid var(--gold-hi);box-shadow:none}
+.link{display:block;margin:14px auto 0;background:none;border:0;padding:8px;color:#f0e0cb;font:500 14px/1.3 var(--sans);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.stack{display:grid;gap:12px}
+.ticket{background:var(--paper);border-radius:12px;padding:10px;box-shadow:0 22px 34px -20px rgba(0,0,0,.8)}
+.ticket img{display:block;width:100%;max-width:100%;height:auto;border-radius:6px}
+.hint{margin:16px 0;text-align:center;font:400 14px/1.5 var(--sans);color:#f0e0cb}
+.thanks{text-align:center}
+.thanks p{font:500 20px/1.5 var(--serif);color:var(--ivory);margin-top:12px}
+
+/* Pie */
+.foot{text-align:center;padding:22px 0 8px}
+.foot p{font:400 38px/1.1 var(--display);color:var(--gold-deep)}
+
+/* Control de acceso (solo anfitriona) */
+.host{margin:26px 16px 24px;padding:20px 16px;border:1px solid var(--gold);border-radius:10px;background:#fff}
+.host h2{font:600 26px/1.1 var(--serif);color:var(--wine)}
+.host .sub{margin-top:4px;font:400 13px/1.45 var(--sans);color:var(--ink-soft)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}
+.stats div{background:#fbf3df;border-radius:8px;padding:10px 6px;text-align:center}
+.stats b{display:block;font:700 28px/1 var(--serif);color:var(--wine);font-variant-numeric:lining-nums}
+.stats span{display:block;margin-top:4px;font:500 10px/1.2 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--gold-deep)}
+.scan{display:grid;gap:8px;margin-top:18px}
+.scan label{font:600 12px/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--wine)}
+.scan input{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font:400 16px/1.3 var(--sans);color:var(--ink);background:#fff}
+.scan .btn{min-height:46px;font-size:14px}
+.result{margin-top:10px;padding:12px;border-radius:8px;font:500 15px/1.45 var(--sans);overflow-wrap:anywhere}
+.result.ok{background:#e9f4e6;color:#1f4a1c}
+.result.warn{background:#fdecc8;color:#5c3a00}
+.result.bad{background:#fbe0e3;color:#6a1220}
+.result .btn{margin-top:10px}
+.rows{margin-top:16px;display:grid;gap:8px}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:8px}
+.row .who{font:600 15px/1.3 var(--sans);overflow-wrap:anywhere}
+.row .meta{grid-column:1;font:400 12px/1.4 var(--sans);color:var(--ink-soft);overflow-wrap:anywhere}
+.row .chip{grid-column:2;grid-row:1;font:600 11px/1 var(--sans);padding:5px 8px;border-radius:999px;background:#e9f4e6;color:#1f4a1c}
+.row .chip.no{background:#f1e6e8;color:#6a1220}
+.row .chip.in{background:#fdecc8;color:#5c3a00}
+.row button{grid-column:2;grid-row:2;min-height:38px;padding:6px 12px;border:1px solid var(--wine);border-radius:999px;background:#fff;color:var(--wine);font:600 12px/1.2 var(--sans);cursor:pointer}
+.row button[disabled]{opacity:.5}
+.empty{padding:14px;text-align:center;font:400 14px/1.5 var(--sans);color:var(--ink-soft)}
+[hidden]{display:none!important}
+img{max-width:100%}
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="bWine" cx=".34" cy=".28" r=".85"><stop offset="0" stop-color="#b3304f"/><stop offset=".45" stop-color="#7b1230"/><stop offset="1" stop-color="#450a1a"/></radialGradient>
+    <radialGradient id="bGold" cx=".34" cy=".28" r=".85"><stop offset="0" stop-color="#fbeab0"/><stop offset=".45" stop-color="#d4af37"/><stop offset="1" stop-color="#85601a"/></radialGradient>
+    <radialGradient id="bPearl" cx=".34" cy=".28" r=".85"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#f3e6cc"/><stop offset="1" stop-color="#cdb88c"/></radialGradient>
+    <linearGradient id="rbGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7e4a4"/><stop offset=".5" stop-color="#d4af37"/><stop offset="1" stop-color="#9a7424"/></linearGradient>
+    <linearGradient id="rbTail" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8902f"/><stop offset="1" stop-color="#7d5a15"/></linearGradient>
+    <symbol id="bfly" viewBox="0 0 100 80">
+      <path d="M50 38C34 4 6 8 8 30c2 14 22 16 42 10z"/><path d="M50 38C66 4 94 8 92 30c-2 14-22 16-42 10z"/>
+      <path d="M50 42C34 46 14 52 22 68c10 10 24-6 28-22z"/><path d="M50 42c16 4 36 10 28 26-10 10-24-6-28-22z"/>
+      <path d="M50 28v32" stroke="#a37a1f" stroke-width="3" stroke-linecap="round" fill="none"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main class="page">
+  <div class="garland" id="garlandTop" aria-hidden="true"></div>
+
+  <section class="hero" aria-label="Portada">
+    <div class="arch">
+      <svg class="bf bf-a" aria-hidden="true"><use href="#bfly"/></svg>
+      <p class="neon" aria-label="Happy Birthday"><span>Happy</span><span>Birthday</span></p>
+      <p class="fifty" aria-hidden="true">50</p>
+      <svg class="bf bf-b" aria-hidden="true"><use href="#bfly"/></svg>
+    </div>
+    <svg class="ribbon" viewBox="0 0 400 120" role="img" aria-label="Mis 50 años">
+      <path d="M52 44 L8 54 L28 76 L8 98 L56 92Z" fill="url(#rbTail)"/>
+      <path d="M348 44 L392 54 L372 76 L392 98 L344 92Z" fill="url(#rbTail)"/>
+      <path d="M44 38 Q200 8 356 38 L356 92 Q200 62 44 92Z" fill="url(#rbGold)"/>
+      <path d="M44 38 Q200 8 356 38" fill="none" stroke="#fbeab0" stroke-width="2"/>
+      <path d="M44 92 Q200 62 356 92" fill="none" stroke="#85601a" stroke-width="2"/>
+      <path id="rbPath" d="M70 72 Q200 44 330 72" fill="none"/>
+      <text font-family="Pinyon Script, cursive" font-size="50" fill="#430a18" text-anchor="middle"><textPath href="#rbPath" startOffset="50%">Mis 50 Años</textPath></text>
+    </svg>
+    <a class="cta" href="#confirmar">
+      <i><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></i>
+      Toca para confirmar tu asistencia
+    </a>
+  </section>
+
+  <section class="honoree">
+    <h1 class="name" id="honoree">Maria Aquino</h1>
+    <div class="emblem" aria-hidden="true">
+      <svg class="bf bf-l"><use href="#bfly"/></svg>
+      <div class="ring"></div>
+      <div class="core"><b>50</b><small>años</small></div>
+      <svg class="bf bf-r"><use href="#bfly"/></svg>
+    </div>
+    <div class="note">
+      <p>Hace cincuenta años llegué a este mundo, y hoy celebro cada día, cada sonrisa y cada persona que me ha acompañado.</p>
+      <p>Quiero compartir este momento tan especial contigo.</p>
+    </div>
+  </section>
+
+  <section class="when" aria-label="Fecha y cuenta regresiva">
+    <div class="dateline"><span id="dWeek">Sábado</span><b id="dDay">16</b><span id="dMonth">Enero</span></div>
+    <p class="hour" id="dHour">7:00 pm</p>
+    <p class="asks">¿Cuánto falta?</p>
+    <div class="cd" role="timer" aria-label="Cuenta regresiva para la fiesta">
+      <div><span class="n" id="cdD">0</span><span class="l">Días</span></div>
+      <div><span class="n" id="cdH">00</span><span class="l">Horas</span></div>
+      <div><span class="n" id="cdM">00</span><span class="l">Minutos</span></div>
+      <div><span class="n" id="cdS">00</span><span class="l">Segundos</span></div>
+    </div>
+    <p class="cd-note" id="cdNote"></p>
+    <a class="cal" id="calLink" href="#" target="_blank" rel="noopener">Agregar al calendario</a>
+
+    <div class="venue" id="venue" hidden>
+      <h2>Lugar</h2>
+      <p id="vName"></p>
+      <p class="addr" id="vAddr"></p>
+      <a id="vMap" href="#" target="_blank" rel="noopener" hidden>Ver en el mapa</a>
+    </div>
+  </section>
+
+  <section class="rsvp" id="confirmar" aria-labelledby="rsvpTitle">
+    <h2 id="rsvpTitle">Confirma tu asistencia</h2>
+    <p class="lead" id="rsvpLead">Puedes registrar hasta 2 personas. Al confirmar se genera tu código QR para entrar a la fiesta.</p>
+    <p class="must" id="rsvpMust">Es importante confirmar tu asistencia. De lo contrario, el día de la fiesta no se permitirá el ingreso.</p>
+
+    <form id="rsvpForm" novalidate>
+      <fieldset class="field">
+        <legend>¿Podrás acompañarnos?</legend>
+        <div class="seg">
+          <input type="radio" name="asiste" id="asSi" value="si"><label for="asSi">Sí, asistiré</label>
+          <input type="radio" name="asiste" id="asNo" value="no"><label for="asNo">No podré ir</label>
+        </div>
+      </fieldset>
+      <div class="field">
+        <label for="n1">Tu nombre y apellido</label>
+        <input type="text" id="n1" autocomplete="name" maxlength="40" placeholder="Nombre completo">
+      </div>
+      <div id="yesFields" hidden>
+        <fieldset class="field">
+          <legend>¿Cuántas personas asisten?</legend>
+          <div class="seg">
+            <input type="radio" name="cuantos" id="c1" value="1" checked><label for="c1">Solo yo</label>
+            <input type="radio" name="cuantos" id="c2" value="2"><label for="c2">Yo y 1 acompañante</label>
+          </div>
+        </fieldset>
+        <div class="field" id="n2wrap" hidden>
+          <label for="n2">Nombre del acompañante</label>
+          <input type="text" id="n2" maxlength="40" placeholder="Nombre completo">
+        </div>
+        <div class="field">
+          <label for="tel">Celular <span class="opt">(opcional)</span></label>
+          <input type="tel" id="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="Para avisarte si hay cambios">
+        </div>
+      </div>
+      <p class="err" id="formErr" role="alert"></p>
+      <button class="btn" type="submit" id="submitBtn">Confirmar</button>
+    </form>
+
+    <div id="ticketBox" hidden>
+      <div class="ticket"><img id="ticketImg" alt="Entrada con código QR para la fiesta"></div>
+      <p class="hint" id="ticketHint"></p>
+      <div class="stack">
+        <a class="btn" id="formBtn" href="#" target="_blank" rel="noopener" hidden>Paso 2: registrar mi confirmación</a>
+        <button class="btn" type="button" id="dlBtn">Descargar mi QR</button>
+        <a class="btn ghost" id="waBtn" href="#" target="_blank" rel="noopener">Enviar mi confirmación por WhatsApp</a>
+      </div>
+      <button class="link" type="button" id="changeBtn">Cambiar mi confirmación</button>
+    </div>
+
+    <div id="declinedBox" class="thanks" hidden>
+      <p>Gracias por avisarnos. Lamentamos que no puedas acompañarnos y te enviamos un abrazo.</p>
+      <div class="stack" style="margin-top:20px">
+        <a class="btn" id="formNo" href="#" target="_blank" rel="noopener" hidden>Registrar mi respuesta</a>
+        <a class="btn ghost" id="waNo" href="#" target="_blank" rel="noopener">Enviar mi respuesta por WhatsApp</a>
+      </div>
+      <button class="link" type="button" id="changeBtn2">Cambié de opinión</button>
+    </div>
+  </section>
+
+  <div class="garland" id="garlandBottom" aria-hidden="true"></div>
+  <div class="foot"><p>Te esperamos</p></div>
+
+  <section class="host" id="host" hidden aria-labelledby="hostTitle">
+    <h2 id="hostTitle">Control de acceso</h2>
+    <p class="sub">Solo lo ves tú. Escanea el QR del invitado con la cámara de tu celular y pega aquí el texto, o escribe su código.</p>
+    <div class="stats">
+      <div><b id="stYes">0</b><span>Personas confirmadas</span></div>
+      <div><b id="stNo">0</b><span>No asisten</span></div>
+      <div><b id="stIn">0</b><span>Ya ingresaron</span></div>
+    </div>
+    <form class="scan" id="scanForm">
+      <label for="scanInput">Validar entrada</label>
+      <input type="text" id="scanInput" autocomplete="off" autocapitalize="characters" placeholder="Texto del QR o código (6 caracteres)">
+      <button class="btn" type="submit">Validar</button>
+    </form>
+    <div id="scanResult" class="result" hidden></div>
+    <p class="sub" id="hostStatus" style="margin-top:14px"></p>
+    <div class="rows" id="rows"></div>
+  </section>
+</main>
+
+<script>
+(function(){
+'use strict';
+/* ====== DATOS DE LA FIESTA (edítalos aquí) ====== */
+const CFG={
+  nombre:'Maria Aquino',
+  fecha:'2026-12-12T18:00:00-05:00',   // fecha y hora del evento (hora de Perú/Colombia, UTC-5)
+  tz:'America/Bogota',
+  duracionHoras:5,
+  lugarNombre:'',
+  lugarDireccion:'Ca. Cuatro 0270, Cas. El Tallan. Ref. Calle Cuatro 270 -0',
+  mapaUrl:'https://maps.app.goo.gl/WtJ1ezd6wwXapcz36',                           // enlace de Google Maps (opcional)
+  form:{                                // Google Forms: enlace del formulario y códigos "entry.xxxx" de cada pregunta
+    url:'https://docs.google.com/forms/d/e/1FAIpQLSfDwbMtkcnbPaKvPoe4qZZFbr_brbMxseM7-8Po0_mZkNJpRg/viewform',
+    campos:{codigo:'entry.432593094',nombre:'entry.1386442022',asistencia:'entry.2006894',cuantos:'entry.221839691',acompanante:'entry.1825721404',celular:''},
+    opciones:{si:'SÍ ASISTIRÉ',no:'NO ASISTIRÉ'}
+  },
+  whatsapp:''                           // solo dígitos con código de país, p. ej. 51999999999
+};
+const $=s=>document.querySelector(s);
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const pad=n=>String(n).padStart(2,'0');
+const sleep=(p,ms)=>Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),ms))]);
+const target=new Date(CFG.fecha);
+
+/* ====== Nombre y fecha ====== */
+$('#honoree').textContent=CFG.nombre;
+const P={};
+new Intl.DateTimeFormat('es',{timeZone:CFG.tz,weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(target).forEach(p=>{P[p.type]=p.value});
+const h24=+P.hour,hora=((h24%12)||12)+':'+P.minute+' '+(h24>=12?'pm':'am');
+$('#dWeek').textContent=cap(P.weekday);
+$('#dDay').textContent=P.day;
+$('#dMonth').textContent=cap(P.month);
+$('#dHour').textContent=hora;
+const fechaLarga=cap(P.weekday)+' '+P.day+' de '+P.month+' · '+hora;
+
+const gfmt=d=>d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
+const end=new Date(target.getTime()+CFG.duracionHoras*3600000);
+$('#calLink').href='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent('Mis 50 años - '+CFG.nombre)+
+  '&dates='+gfmt(target)+'/'+gfmt(end)+'&details='+encodeURIComponent('Celebración de los 50 años de '+CFG.nombre)+
+  '&location='+encodeURIComponent([CFG.lugarNombre,CFG.lugarDireccion].filter(Boolean).join(', '));
+
+if(CFG.lugarNombre||CFG.lugarDireccion){
+  $('#venue').hidden=false;
+  $('#vName').textContent=CFG.lugarNombre;$('#vName').hidden=!CFG.lugarNombre;
+  $('#vAddr').textContent=CFG.lugarDireccion;
+  if(CFG.mapaUrl){const a=$('#vMap');a.href=CFG.mapaUrl;a.hidden=false}
+}
+
+/* ====== Cuenta regresiva ====== */
+function tick(){
+  const ms=Math.max(0,target.getTime()-Date.now()),s=Math.floor(ms/1000);
+  $('#cdD').textContent=Math.floor(s/86400);
+  $('#cdH').textContent=pad(Math.floor(s%86400/3600));
+  $('#cdM').textContent=pad(Math.floor(s%3600/60));
+  $('#cdS').textContent=pad(s%60);
+  $('#cdNote').textContent=ms===0?'¡Llegó el gran día!':'';
+}
+tick();setInterval(tick,1000);
+
+/* ====== Decoración: lentejuelas y globos ====== */
+function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+try{
+  const s=9,n=26,c=document.createElement('canvas');c.width=c.height=s*n;
+  const x=c.getContext('2d'),r=rng(50),pal=['#2e1d08','#4a3310','#6b4c14','#8f6b1c','#b8902f','#d9b95a','#f0d68a'];
+  x.fillStyle='#1c1104';x.fillRect(0,0,c.width,c.height);
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){x.fillStyle=pal[Math.floor(Math.pow(r(),1.4)*pal.length)];x.fillRect(i*s+1,j*s+1,s-1,s-1)}
+  document.documentElement.style.setProperty('--sequin','url('+c.toDataURL('image/png')+')');
+}catch(e){}
+const COL={W:'url(#bWine)',G:'url(#bGold)',P:'url(#bPearl)'},KN={W:'#5d0c22',G:'#8f6b1c',P:'#cdb78a'};
+const BAL=[[40,30,34,'W'],[88,22,28,'G'],[24,92,30,'G'],[70,78,26,'P'],[112,64,22,'W'],[150,28,24,'P'],[58,140,24,'W'],[14,150,20,'P'],
+  [380,30,34,'W'],[332,24,28,'P'],[398,94,30,'G'],[350,80,26,'W'],[308,62,22,'G'],[272,28,24,'G'],[364,142,24,'P'],[406,150,20,'W'],
+  [190,12,22,'W'],[232,10,22,'P'],[210,38,20,'G'],[170,58,18,'P'],[252,56,18,'W']];
+function balloons(flip){
+  return BAL.map(([x,y,r,k])=>{
+    const cy=flip?190-y:y,ry=r*1.12,hx=x-r*.32,hy=cy-ry*.42;
+    return '<g><ellipse cx="'+x+'" cy="'+cy+'" rx="'+r+'" ry="'+ry+'" fill="'+COL[k]+'"/>'+
+      '<ellipse cx="'+hx+'" cy="'+hy+'" rx="'+r*.16+'" ry="'+ry*.26+'" fill="#fff" opacity=".38" transform="rotate(-24 '+hx+' '+hy+')"/>'+
+      '<path d="M'+(x-3)+' '+(cy+ry-1)+'l3 6 3-6z" fill="'+KN[k]+'"/></g>';
+  }).join('');
+}
+$('#garlandTop').innerHTML='<svg viewBox="0 0 420 190" aria-hidden="true">'+balloons(false)+'</svg>';
+$('#garlandBottom').innerHTML='<svg viewBox="0 0 420 190" aria-hidden="true">'+balloons(true)+'</svg>';
+
+/* ====== Librería de QR (con respaldo) ====== */
+const qrReady=new Promise(res=>{
+  const srcs=['https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js','https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js'];
+  (function load(i){
+    if(i>=srcs.length)return res(false);
+    const s=document.createElement('script');s.src=srcs[i];
+    s.onload=()=>res(typeof window.qrcode==='function');
+    s.onerror=()=>load(i+1);
+    document.head.appendChild(s);
+  })(0);
+});
+
+/* ====== Capacidades de Claude (opcionales) ====== */
+const capP={
+  db:window.claude&&window.claude.use?window.claude.use('db').catch(()=>null):Promise.resolve(null),
+  user:window.claude&&window.claude.use?window.claude.use('user').catch(()=>null):Promise.resolve(null),
+  dl:window.claude&&window.claude.use?window.claude.use('downloads').catch(()=>null):Promise.resolve(null)
+};
+
+/* ====== Boleto con QR ====== */
+const ALPHA='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+function newCode(){const b=new Uint8Array(6);crypto.getRandomValues(b);return Array.from(b,v=>ALPHA[v%ALPHA.length]).join('')}
+const ascii=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^A-Za-z0-9 .'-]/g,'').toUpperCase().slice(0,24);
+const clean=s=>s.replace(/\s+/g,' ').trim();
+let lastBlob=null;
+
+function spaced(x,text,cx,y,sp){
+  const w=Array.from(text).reduce((a,ch)=>a+x.measureText(ch).width+sp,-sp);
+  let px=cx-w/2;x.textAlign='left';
+  for(const ch of text){x.fillText(ch,px,y);px+=x.measureText(ch).width+sp}
+  x.textAlign='center';
+}
+function fit(x,text,maxW,size,font){
+  let s=size;do{x.font=font(s);s-=2}while(x.measureText(text).width>maxW&&s>18);
+}
+async function renderTicket(e){
+  if(!(await qrReady))throw new Error('qr');
+  try{await Promise.all([document.fonts.load('60px "Pinyon Script"'),document.fonts.load('600 30px "Cormorant Garamond"'),document.fonts.load('600 20px Montserrat')])}catch(_){}
+  const W=720,H=1120,c=document.createElement('canvas');c.width=W;c.height=H;
+  const x=c.getContext('2d');x.textAlign='center';
+  x.fillStyle='#fffcf6';x.fillRect(0,0,W,H);
+  const g=x.createLinearGradient(0,0,0,300);g.addColorStop(0,'#5b0f25');g.addColorStop(1,'#340712');
+  x.fillStyle=g;x.fillRect(0,0,W,300);
+  x.strokeStyle='#c9a24b';x.lineWidth=6;x.strokeRect(20,20,W-40,H-40);
+  x.strokeStyle='#f0d995';x.lineWidth=2;x.strokeRect(32,32,W-64,H-64);
+  x.fillStyle='#f0d995';x.font='600 20px Montserrat, sans-serif';spaced(x,'INVITACIÓN',W/2,92,9);
+  x.font='96px "Pinyon Script", cursive';x.fillStyle='#f6e3a6';x.fillText('Mis 50 años',W/2,190);
+  x.fillStyle='#f8ecd9';fit(x,CFG.nombre,560,36,s=>'600 '+s+'px "Cormorant Garamond", Georgia, serif');x.fillText(CFG.nombre,W/2,238);
+  x.fillStyle='#f0d995';x.font='500 17px Montserrat, sans-serif';spaced(x,fechaLarga.toUpperCase(),W/2,278,2);
+  // QR
+  const payload='F50|'+e.code+'|'+e.count+'|'+e.names.map(ascii).join(';');
+  const qr=window.qrcode(0,'L');qr.addData(payload);qr.make();
+  const n=qr.getModuleCount(),area=440,cell=Math.max(2,Math.floor(area/(n+8))),qs=cell*(n+8),ox=(W-qs)/2,oy=330+(480-qs)/2;
+  x.fillStyle='#ffffff';x.fillRect(120,320,480,480);
+  x.strokeStyle='#c9a24b';x.lineWidth=4;x.strokeRect(120,320,480,480);
+  x.fillStyle='#2a0610';
+  for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(qr.isDark(r,k))x.fillRect(ox+(k+4)*cell,oy+(r+4)*cell,cell,cell);
+  // textos
+  x.fillStyle='#8a6a1b';x.font='600 20px Montserrat, sans-serif';
+  spaced(x,'ENTRADA PARA '+e.count+(e.count>1?' PERSONAS':' PERSONA'),W/2,862,5);
+  x.fillStyle='#430a18';
+  e.names.forEach((nm,i)=>{fit(x,nm,560,38,s=>'600 '+s+'px "Cormorant Garamond", Georgia, serif');x.fillText(nm,W/2,914+i*44)});
+  x.fillStyle='#6e1128';x.font='600 28px Montserrat, sans-serif';spaced(x,'F50-'+e.code,W/2,1018,6);
+  x.fillStyle='#6b4a52';x.font='400 18px Montserrat, sans-serif';x.fillText('Presenta este QR en la entrada',W/2,1062);
+  const blob=await new Promise(r=>c.toBlob(r,'image/png'));
+  lastBlob=blob;
+  return c.toDataURL('image/png');
+}
+
+/* ====== Formulario ====== */
+const KEY='f50_ticket_v1';
+const form=$('#rsvpForm');
+let entry=null,busy=false;
+const store={
+  get(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch(_){return null}},
+  set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(_){}},
+  del(){try{localStorage.removeItem(KEY)}catch(_){}}
+};
+function syncForm(){
+  const asiste=(form.querySelector('input[name=asiste]:checked')||{}).value;
+  $('#yesFields').hidden=asiste!=='si';
+  $('#n2wrap').hidden=!(asiste==='si'&&$('#c2').checked);
+  $('#submitBtn').textContent=asiste==='si'?'Confirmar y generar mi QR':'Confirmar';
+}
+form.addEventListener('change',syncForm);
+const setErr=(m,el)=>{$('#formErr').textContent=m;if(el)el.focus();return false};
+const waLink=txt=>'https://wa.me/'+CFG.whatsapp+'?text='+encodeURIComponent(txt);
+
+async function saveRemote(e){
+  const db=await capP.db,user=await capP.user;
+  if(!db||!user)return false;
+  const uid=await user.id();if(!uid)return false;
+  try{
+    await sleep(db.doc('rsvp/'+uid).set({code:e.code,status:e.status,names:e.names,count:e.count,phone:e.phone||'',at:Date.now()}),8000);
+    return true;
+  }catch(_){return false}
+}
+async function removeRemote(){
+  try{
+    const db=await capP.db,user=await capP.user;if(!db||!user)return;
+    const uid=await user.id();if(uid)await sleep(db.doc('rsvp/'+uid).delete(),6000);
+  }catch(_){}
+}
+function formLink(e){
+  const F=CFG.form;if(!F||!F.url)return '';
+  const c=F.campos,q=new URLSearchParams();q.set('usp','pp_url');
+  const put=(k,v)=>{if(k&&v)q.set(k,v)};
+  put(c.codigo,'F50-'+e.code);put(c.nombre,e.names[0]);
+  put(c.asistencia,e.status==='yes'?F.opciones.si:F.opciones.no);
+  if(e.status==='yes'){
+    put(c.cuantos,e.count>1?'2':'1');
+    put(c.acompanante,e.names[1]);
+    put(c.celular,e.phone);
+  }
+  return F.url+(F.url.includes('?')?'&':'?')+q.toString();
+}
+async function show(e,saved){
+  form.hidden=true;$('#rsvpLead').hidden=true;
+  $('#ticketBox').hidden=true;$('#declinedBox').hidden=true;
+  if(e.status==='no'){
+    $('#waNo').href=waLink('Hola, gracias por la invitación a los 50 años de '+CFG.nombre+'. Lamentablemente no podré asistir. ('+e.names[0]+')');
+    const fn=formLink(e),fo=$('#formNo');fo.hidden=!fn;if(fn)fo.href=fn;
+    $('#waNo').hidden=!!fn&&!CFG.whatsapp;
+    $('#declinedBox').hidden=false;return;
+  }
+  $('#ticketImg').src=await renderTicket(e);
+  const fl=formLink(e),fb=$('#formBtn');fb.hidden=!fl;if(fl)fb.href=fl;
+  $('#waBtn').hidden=!!fl&&!CFG.whatsapp;
+  $('#ticketHint').textContent=saved
+    ?'Tu confirmación quedó registrada. Guarda este QR en tu celular: lo vas a mostrar en la entrada.'
+    :fl?'Tu QR está listo, pero solo será válido cuando envíes el formulario (paso 2). Guárdalo en tu celular: lo mostrarás en la entrada.'
+    :'Tu QR está listo. Guárdalo en tu celular y, para que quedes en la lista de invitados, envía tu confirmación por WhatsApp.';
+  $('#waBtn').href=waLink('Hola, confirmo mi asistencia a los 50 años de '+CFG.nombre+'. Invitados: '+e.names.join(' y ')+' ('+e.count+(e.count>1?' personas':' persona')+'). Código: F50-'+e.code);
+  $('#ticketBox').hidden=false;
+}
+form.addEventListener('submit',async ev=>{
+  ev.preventDefault();if(busy)return;
+  const asiste=(form.querySelector('input[name=asiste]:checked')||{}).value;
+  const n1=clean($('#n1').value);
+  if(!asiste)return setErr('Elige si podrás asistir.',$('#asSi'));
+  if(n1.length<3)return setErr('Escribe tu nombre y apellido.',$('#n1'));
+  let names=[n1],count=asiste==='si'?1:0,phone='';
+  if(asiste==='si'){
+    if($('#c2').checked){
+      const n2=clean($('#n2').value);
+      if(n2.length<3)return setErr('Escribe el nombre de tu acompañante.',$('#n2'));
+      names.push(n2);count=2;
+    }
+    phone=$('#tel').value.trim();
+    if(phone&&!/^[+\d][\d\s()-]{6,18}$/.test(phone))return setErr('Revisa el número de celular.',$('#tel'));
+  }
+  setErr('');busy=true;
+  const btn=$('#submitBtn'),label=btn.textContent;btn.disabled=true;btn.textContent='Generando…';
+  const e={code:newCode(),status:asiste==='si'?'yes':'no',names,count,phone};
+  try{
+    if(e.status==='yes')await renderTicket(e);   // comprueba que el QR se puede generar antes de guardar
+    const saved=await saveRemote(e);
+    entry=e;store.set(Object.assign({saved},e));
+    await show(e,saved);
+    $('#confirmar').scrollIntoView({block:'start'});
+  }catch(_){
+    setErr('No pudimos generar el QR. Recarga la página e inténtalo de nuevo.');
+  }finally{busy=false;btn.disabled=false;btn.textContent=label}
+});
+$('#dlBtn').addEventListener('click',async()=>{
+  if(!lastBlob)return;
+  const d=await capP.dl;
+  if(d){try{await d.save({filename:'entrada-fiesta-50.png',data:lastBlob})}catch(_){}return}
+  const u=URL.createObjectURL(lastBlob),a=document.createElement('a');
+  a.href=u;a.download='entrada-fiesta-50.png';document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(u),4000);
+});
+async function change(){
+  const prev=entry||store.get();
+  await removeRemote();store.del();entry=null;
+  $('#ticketBox').hidden=true;$('#declinedBox').hidden=true;
+  form.hidden=false;$('#rsvpLead').hidden=false;
+  if(prev){
+    (prev.status==='yes'?$('#asSi'):$('#asNo')).checked=true;
+    $('#n1').value=prev.names[0]||'';
+    if(prev.names[1]){$('#c2').checked=true;$('#n2').value=prev.names[1]}
+    $('#tel').value=prev.phone||'';
+  }
+  syncForm();$('#n1').focus();
+}
+$('#changeBtn').addEventListener('click',change);
+$('#changeBtn2').addEventListener('click',change);
+const prior=store.get();
+if(prior&&prior.code&&Array.isArray(prior.names)){entry=prior;show(prior,!!prior.saved).catch(()=>{form.hidden=false;$('#rsvpLead').hidden=false})}
+
+/* ====== Control de acceso (solo anfitriona) ====== */
+Promise.all([capP.db,capP.user]).then(async([db,user])=>{
+  if(!db||!user)return;
+  let admin=false;try{admin=(await user.canEdit())||(await user.isOwner())}catch(_){}
+  if(admin)startHost(db);
+});
+function startHost(db){
+  $('#host').hidden=false;
+  let list=[],checks=new Map();
+  const status=$('#hostStatus'),rowsEl=$('#rows');
+  const lbl=d=>String((d&&d.code)||'').toUpperCase();
+  const timer=setTimeout(()=>{status.textContent='Todavía no se puede leer la lista. Se actualizará sola cuando haya conexión.'},10000);
+  const okSnap=s=>{if(!s.metadata.fromCache){clearTimeout(timer);status.textContent=''}};
+  function render(){
+    let yes=0,no=0,inn=0;
+    list.forEach(d=>{if(d.status==='yes')yes+=Number(d.count)||0;else no++});
+    checks.forEach(c=>{inn+=Number(c.count)||0});
+    $('#stYes').textContent=yes;$('#stNo').textContent=no;$('#stIn').textContent=inn;
+    rowsEl.textContent='';
+    if(!list.length){const p=document.createElement('p');p.className='empty';p.textContent='Aún no hay confirmaciones registradas en la lista.';rowsEl.appendChild(p);return}
+    list.slice().sort((a,b)=>(b.at||0)-(a.at||0)).forEach(d=>{
+      const code=lbl(d),row=document.createElement('div');row.className='row';
+      const who=document.createElement('div');who.className='who';who.textContent=(Array.isArray(d.names)?d.names:[]).join(' y ')||'Sin nombre';
+      const meta=document.createElement('div');meta.className='meta';
+      meta.textContent=(d.status==='yes'?(Number(d.count)||0)+' persona(s) · F50-'+code:'No asiste')+(d.phone?' · '+d.phone:'');
+      const chip=document.createElement('span');const inside=checks.has(code);
+      chip.className='chip'+(d.status!=='yes'?' no':inside?' in':'');
+      chip.textContent=d.status!=='yes'?'No asiste':inside?'Ingresó':'Confirmado';
+      row.append(who,chip,meta);
+      if(d.status==='yes'){
+        const b=document.createElement('button');b.type='button';b.textContent=inside?'Deshacer ingreso':'Registrar ingreso';
+        b.addEventListener('click',()=>toggle(code,d,b));row.appendChild(b);
+      }
+      rowsEl.appendChild(row);
+    });
+  }
+  async function toggle(code,d,btn){
+    btn.disabled=true;
+    try{
+      const ref=db.doc('checkins/'+code);
+      if(checks.has(code))await ref.delete();
+      else await ref.set({code,count:Number(d.count)||1,names:Array.isArray(d.names)?d.names:[],at:Date.now()});
+    }catch(_){status.textContent='No se pudo guardar el cambio. Inténtalo de nuevo.'}
+    btn.disabled=false;
+  }
+  db.collection('rsvp').onSnapshot(s=>{okSnap(s);list=s.docs.map(d=>d.data()||{});render()},()=>{status.textContent='No se pudo leer la lista de confirmaciones.'});
+  db.collection('checkins').onSnapshot(s=>{okSnap(s);checks=new Map(s.docs.map(d=>[d.id,d.data()||{}]));render()},()=>{});
+
+  const res=$('#scanResult');
+  function out(cls,msg,btnLabel,fn){
+    res.hidden=false;res.className='result '+cls;res.textContent=msg;
+    if(btnLabel){const b=document.createElement('button');b.type='button';b.className='btn';b.textContent=btnLabel;b.addEventListener('click',async()=>{b.disabled=true;await fn();b.disabled=false});res.appendChild(b)}
+  }
+  $('#scanForm').addEventListener('submit',ev=>{
+    ev.preventDefault();
+    const txt=$('#scanInput').value.trim();
+    let code='',names=[],count=0;
+    let m=/^F50\|([A-Z0-9]{6})\|([12])\|(.*)$/i.exec(txt);
+    if(m){code=m[1].toUpperCase();count=+m[2];names=m[3].split(';').filter(Boolean)}
+    else{
+      m=/^(?:F50-)?([A-Z0-9]{6})$/i.exec(txt);
+      if(!m)return out('bad','No reconocemos ese texto. Pega el contenido completo del QR o escribe el código de 6 caracteres.');
+      code=m[1].toUpperCase();
+      const d=list.find(x=>lbl(x)===code);
+      if(!d)return out('bad','El código '+code+' no está en la lista. Escanea el QR completo para validarlo.');
+      names=Array.isArray(d.names)?d.names:[];count=Number(d.count)||1;
+    }
+    const who=names.join(' y ')+' · '+count+(count>1?' personas':' persona');
+    const prev=checks.get(code);
+    if(prev){
+      const t=prev.at?new Date(prev.at).toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'}):'';
+      return out('warn','Este QR ya fue usado'+(t?' a las '+t:'')+'. '+who+'.');
+    }
+    out('ok','Entrada válida: '+who+'.','Registrar ingreso',async()=>{
+      try{await db.doc('checkins/'+code).set({code,count,names,at:Date.now()});out('ok','Ingreso registrado: '+who+'.');$('#scanInput').value=''}
+      catch(_){out('bad','No se pudo registrar el ingreso. Inténtalo de nuevo.')}
+    });
+  });
+}
+
+syncForm();
+})();
+</script>
+</body>
+</html>
