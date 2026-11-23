@@ -135,6 +135,10 @@ a{color:inherit}
 .stack{display:grid;gap:12px}
 .ticket{background:var(--paper);border-radius:12px;padding:10px;box-shadow:0 22px 34px -20px rgba(0,0,0,.8)}
 .ticket img{display:block;width:100%;max-width:100%;height:auto;border-radius:6px}
+.tcard{margin-bottom:30px}
+.tname{margin-bottom:10px;text-align:center;font:600 12px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-hi);overflow-wrap:anywhere}
+.whostep{margin:0 0 18px;text-align:center;font:600 14px/1.5 var(--sans);color:var(--gold-hi)}
+#addBtn{margin-top:4px}
 .hint{margin:16px 0;text-align:center;font:400 14px/1.5 var(--sans);color:#f0e0cb}
 .thanks{text-align:center}
 .thanks p{font:500 20px/1.5 var(--serif);color:var(--ivory);margin-top:12px}
@@ -253,10 +257,13 @@ img{max-width:100%}
 
   <section class="rsvp" id="confirmar" aria-labelledby="rsvpTitle">
     <h2 id="rsvpTitle">Confirma tu asistencia</h2>
-    <p class="lead" id="rsvpLead">Puedes registrar hasta 2 personas. Al confirmar se genera tu código QR para entrar a la fiesta.</p>
-    <p class="must" id="rsvpMust">Es importante confirmar tu asistencia.</p>
+    <p class="lead" id="rsvpLead">Cada persona confirma con su propio nombre y recibe su código QR para entrar a la fiesta. Son máximo 2 personas por invitación.</p>
+    <p class="must" id="rsvpMust">Es importante confirmar tu asistencia. De lo contrario, el día de la fiesta no se permitirá el ingreso.</p>
+
+    <div id="tickets"></div>
 
     <form id="rsvpForm" novalidate>
+      <p class="whostep" id="whoStep" hidden>Registra ahora a la segunda persona, con su propio nombre.</p>
       <fieldset class="field">
         <legend>¿Podrás acompañarnos?</legend>
         <div class="seg">
@@ -265,49 +272,16 @@ img{max-width:100%}
         </div>
       </fieldset>
       <div class="field">
-        <label for="n1">Tu nombre y apellido</label>
-        <input type="text" id="n1" autocomplete="name" maxlength="40" placeholder="Nombre completo">
-      </div>
-      <div id="yesFields" hidden>
-        <fieldset class="field">
-          <legend>¿Cuántas personas asisten?</legend>
-          <div class="seg">
-            <input type="radio" name="cuantos" id="c1" value="1" checked><label for="c1">Solo yo</label>
-            <input type="radio" name="cuantos" id="c2" value="2"><label for="c2">Yo y 1 acompañante</label>
-          </div>
-        </fieldset>
-        <div class="field" id="n2wrap" hidden>
-          <label for="n2">Nombre del acompañante</label>
-          <input type="text" id="n2" maxlength="40" placeholder="Nombre completo">
-        </div>
-        <div class="field">
-          <label for="tel">Celular <span class="opt">(opcional)</span></label>
-          <input type="tel" id="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="Para avisarte si hay cambios">
-        </div>
+        <label for="n1">Nombre y apellido</label>
+        <input type="text" id="n1" autocomplete="off" maxlength="40" placeholder="Nombre completo">
       </div>
       <p class="err" id="formErr" role="alert"></p>
       <button class="btn" type="submit" id="submitBtn">Confirmar</button>
+      <button class="link" type="button" id="cancelAdd" hidden>Cancelar</button>
     </form>
 
-    <div id="ticketBox" hidden>
-      <div class="ticket"><img id="ticketImg" alt="Entrada con código QR para la fiesta"></div>
-      <p class="hint" id="ticketHint"></p>
-      <div class="stack">
-        <a class="btn" id="formBtn" href="#" target="_blank" rel="noopener" hidden>Paso 2: registrar mi confirmación</a>
-        <button class="btn" type="button" id="dlBtn">Descargar mi QR</button>
-        <a class="btn ghost" id="waBtn" href="#" target="_blank" rel="noopener">Enviar mi confirmación por WhatsApp</a>
-      </div>
-      <button class="link" type="button" id="changeBtn">Cambiar mi confirmación</button>
-    </div>
-
-    <div id="declinedBox" class="thanks" hidden>
-      <p>Gracias por avisarnos. Lamentamos que no puedas acompañarnos y te enviamos un abrazo.</p>
-      <div class="stack" style="margin-top:20px">
-        <a class="btn" id="formNo" href="#" target="_blank" rel="noopener" hidden>Registrar mi respuesta</a>
-        <a class="btn ghost" id="waNo" href="#" target="_blank" rel="noopener">Enviar mi respuesta por WhatsApp</a>
-      </div>
-      <button class="link" type="button" id="changeBtn2">Cambié de opinión</button>
-    </div>
+    <button class="btn ghost" type="button" id="addBtn" hidden>Registrar a otra persona</button>
+    <p class="hint" id="limitNote" hidden>Esta invitación ya tiene 2 personas registradas, que es el máximo.</p>
   </section>
 
   <div class="garland" id="garlandBottom" aria-hidden="true"></div>
@@ -342,12 +316,12 @@ const CFG={
   tz:'America/Bogota',
   duracionHoras:5,
   lugarNombre:'',
-  lugarDireccion:'Ca. Cuatro 0270, Cas. El Tallan. Ref. Calle San Luis',
+  lugarDireccion:'Ca. Cuatro 0270, Cas. El Tallan. Ref. Calle Cuatro 270 -0',
   mapaUrl:'https://maps.app.goo.gl/WtJ1ezd6wwXapcz36',                           // enlace de Google Maps (opcional)
   form:{                                // Google Forms: enlace del formulario y códigos "entry.xxxx" de cada pregunta
     url:'https://docs.google.com/forms/d/e/1FAIpQLSfDwbMtkcnbPaKvPoe4qZZFbr_brbMxseM7-8Po0_mZkNJpRg/viewform',
-    campos:{codigo:'entry.432593094',nombre:'entry.1386442022',asistencia:'entry.2006894',cuantos:'entry.221839691',acompanante:'entry.1825721404',celular:''},
-    opciones:{si:'SÍ ASISTIRÉ',no:'NO ASISTIRÉ'}
+    campos:{codigo:'entry.432593094',nombre:'entry.1386442022',asistencia:'entry.2006894'},
+    opciones:{si:'SÍ ASISTIRÉ',no:'NO PODRÉ ASISTIR'}
   },
   whatsapp:''                           // solo dígitos con código de país, p. ej. 51999999999
 };
@@ -475,136 +449,110 @@ async function renderTicket(e){
   for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(qr.isDark(r,k))x.fillRect(ox+(k+4)*cell,oy+(r+4)*cell,cell,cell);
   // textos
   x.fillStyle='#8a6a1b';x.font='600 20px Montserrat, sans-serif';
-  spaced(x,'ENTRADA PARA '+e.count+(e.count>1?' PERSONAS':' PERSONA'),W/2,862,5);
+  spaced(x,'ENTRADA PERSONAL',W/2,862,5);
   x.fillStyle='#430a18';
   e.names.forEach((nm,i)=>{fit(x,nm,560,38,s=>'600 '+s+'px "Cormorant Garamond", Georgia, serif');x.fillText(nm,W/2,914+i*44)});
   x.fillStyle='#6e1128';x.font='600 28px Montserrat, sans-serif';spaced(x,'F50-'+e.code,W/2,1018,6);
   x.fillStyle='#6b4a52';x.font='400 18px Montserrat, sans-serif';x.fillText('Presenta este QR en la entrada',W/2,1062);
   const blob=await new Promise(r=>c.toBlob(r,'image/png'));
-  lastBlob=blob;
-  return c.toDataURL('image/png');
+  return {url:c.toDataURL('image/png'),blob};
 }
 
 /* ====== Formulario ====== */
-const KEY='f50_ticket_v1';
+const MAX=2,KEY='f50_tickets_v2';
 const form=$('#rsvpForm');
-let entry=null,busy=false;
+let list=[],adding=false,busy=false,seq=0;
+const cache=new Map();
 const store={
-  get(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch(_){return null}},
-  set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(_){}},
-  del(){try{localStorage.removeItem(KEY)}catch(_){}}
+  get(){try{const v=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(v)?v.filter(x=>x&&x.code&&Array.isArray(x.names)&&x.names[0]).slice(0,MAX):[]}catch(_){return []}},
+  set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(_){}}
 };
+const setErr=(m,el)=>{$('#formErr').textContent=m;if(el)el.focus();return false};
 function syncForm(){
   const asiste=(form.querySelector('input[name=asiste]:checked')||{}).value;
-  $('#yesFields').hidden=asiste!=='si';
-  $('#n2wrap').hidden=!(asiste==='si'&&$('#c2').checked);
   $('#submitBtn').textContent=asiste==='si'?'Confirmar y generar mi QR':'Confirmar';
 }
 form.addEventListener('change',syncForm);
-const setErr=(m,el)=>{$('#formErr').textContent=m;if(el)el.focus();return false};
-const waLink=txt=>'https://wa.me/'+CFG.whatsapp+'?text='+encodeURIComponent(txt);
 
-async function saveRemote(e){
-  const db=await capP.db,user=await capP.user;
-  if(!db||!user)return false;
-  const uid=await user.id();if(!uid)return false;
-  try{
-    await sleep(db.doc('rsvp/'+uid).set({code:e.code,status:e.status,names:e.names,count:e.count,phone:e.phone||'',at:Date.now()}),8000);
-    return true;
-  }catch(_){return false}
-}
-async function removeRemote(){
-  try{
-    const db=await capP.db,user=await capP.user;if(!db||!user)return;
-    const uid=await user.id();if(uid)await sleep(db.doc('rsvp/'+uid).delete(),6000);
-  }catch(_){}
-}
 function formLink(e){
   const F=CFG.form;if(!F||!F.url)return '';
   const c=F.campos,q=new URLSearchParams();q.set('usp','pp_url');
   const put=(k,v)=>{if(k&&v)q.set(k,v)};
   put(c.codigo,'F50-'+e.code);put(c.nombre,e.names[0]);
   put(c.asistencia,e.status==='yes'?F.opciones.si:F.opciones.no);
-  if(e.status==='yes'){
-    put(c.cuantos,e.count>1?'2':'1');
-    put(c.acompanante,e.names[1]);
-    put(c.celular,e.phone);
-  }
   return F.url+(F.url.includes('?')?'&':'?')+q.toString();
 }
-async function show(e,saved){
-  form.hidden=true;$('#rsvpLead').hidden=true;
-  $('#ticketBox').hidden=true;$('#declinedBox').hidden=true;
-  if(e.status==='no'){
-    $('#waNo').href=waLink('Hola, gracias por la invitación a los 50 años de '+CFG.nombre+'. Lamentablemente no podré asistir. ('+e.names[0]+')');
-    const fn=formLink(e),fo=$('#formNo');fo.hidden=!fn;if(fn)fo.href=fn;
-    $('#waNo').hidden=!!fn&&!CFG.whatsapp;
-    $('#declinedBox').hidden=false;return;
+function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n}
+async function saveImage(blob,name){
+  const d=await capP.dl;
+  if(d){try{await d.save({filename:name,data:blob})}catch(_){}return}
+  const u=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(u),4000);
+}
+const slug=s=>ascii(s).toLowerCase().replace(/\s+/g,'-')||'invitado';
+function ext(href,text){const a=el('a','btn',text);a.href=href;a.target='_blank';a.rel='noopener';return a}
+
+async function card(e,i){
+  const d=el('div','tcard'),first=e.names[0].split(' ')[0],link=formLink(e);
+  d.appendChild(el('p','tname','Persona '+(i+1)+': '+e.names[0]));
+  if(e.status==='yes'){
+    let t=cache.get(e.code);if(!t){t=await renderTicket(e);cache.set(e.code,t)}
+    const w=el('div','ticket'),img=el('img');img.src=t.url;img.alt='Entrada con código QR de '+e.names[0];w.appendChild(img);d.appendChild(w);
+    d.appendChild(el('p','hint',link
+      ?'Tu QR está listo, pero solo será válido cuando envíes el formulario (paso 2). Guárdalo en tu celular: lo mostrarás en la entrada.'
+      :'Tu QR está listo. Guárdalo en tu celular: lo mostrarás en la entrada.'));
+    const s=el('div','stack');
+    if(link)s.appendChild(ext(link,'Paso 2: registrar a '+first));
+    const b=el('button','btn ghost','Descargar QR');b.type='button';
+    b.addEventListener('click',()=>saveImage(t.blob,'entrada-fiesta-50-'+slug(e.names[0])+'.png'));
+    s.appendChild(b);d.appendChild(s);
+  }else{
+    const th=el('div','thanks');
+    th.appendChild(el('p',null,'Gracias por avisarnos. Lamentamos que no puedas acompañarnos y te enviamos un abrazo.'));
+    d.appendChild(th);
+    if(link){const s=el('div','stack');s.style.marginTop='16px';s.appendChild(ext(link,'Registrar mi respuesta'));d.appendChild(s)}
   }
-  $('#ticketImg').src=await renderTicket(e);
-  const fl=formLink(e),fb=$('#formBtn');fb.hidden=!fl;if(fl)fb.href=fl;
-  $('#waBtn').hidden=!!fl&&!CFG.whatsapp;
-  $('#ticketHint').textContent=saved
-    ?'Tu confirmación quedó registrada. Guarda este QR en tu celular: lo vas a mostrar en la entrada.'
-    :fl?'Tu QR está listo, pero solo será válido cuando envíes el formulario (paso 2). Guárdalo en tu celular: lo mostrarás en la entrada.'
-    :'Tu QR está listo. Guárdalo en tu celular y, para que quedes en la lista de invitados, envía tu confirmación por WhatsApp.';
-  $('#waBtn').href=waLink('Hola, confirmo mi asistencia a los 50 años de '+CFG.nombre+'. Invitados: '+e.names.join(' y ')+' ('+e.count+(e.count>1?' personas':' persona')+'). Código: F50-'+e.code);
-  $('#ticketBox').hidden=false;
+  const r=el('button','link',e.status==='yes'?'Quitar esta confirmación':'Cambié de opinión');r.type='button';
+  r.addEventListener('click',()=>{list=list.filter(x=>x.code!==e.code);store.set(list);adding=false;render()});
+  d.appendChild(r);
+  return d;
+}
+async function render(){
+  const my=++seq,cards=[];
+  try{for(let i=0;i<list.length;i++)cards.push(await card(list[i],i))}
+  catch(_){setErr('No pudimos generar el QR. Recarga la página e inténtalo de nuevo.');return}
+  if(my!==seq)return;
+  const box=$('#tickets');box.textContent='';cards.forEach(c=>box.appendChild(c));
+  form.hidden=!(list.length===0||adding);
+  $('#rsvpLead').hidden=list.length>0;
+  $('#whoStep').hidden=!adding;$('#cancelAdd').hidden=!adding;
+  $('#addBtn').hidden=!(list.length>0&&list.length<MAX&&!adding);
+  $('#limitNote').hidden=list.length<MAX;
 }
 form.addEventListener('submit',async ev=>{
   ev.preventDefault();if(busy)return;
+  if(list.length>=MAX)return setErr('Ya registraste el máximo de 2 personas.');
   const asiste=(form.querySelector('input[name=asiste]:checked')||{}).value;
   const n1=clean($('#n1').value);
   if(!asiste)return setErr('Elige si podrás asistir.',$('#asSi'));
-  if(n1.length<3)return setErr('Escribe tu nombre y apellido.',$('#n1'));
-  let names=[n1],count=asiste==='si'?1:0,phone='';
-  if(asiste==='si'){
-    if($('#c2').checked){
-      const n2=clean($('#n2').value);
-      if(n2.length<3)return setErr('Escribe el nombre de tu acompañante.',$('#n2'));
-      names.push(n2);count=2;
-    }
-    phone=$('#tel').value.trim();
-    if(phone&&!/^[+\d][\d\s()-]{6,18}$/.test(phone))return setErr('Revisa el número de celular.',$('#tel'));
-  }
+  if(n1.length<3)return setErr('Escribe el nombre y apellido.',$('#n1'));
+  if(list.some(x=>x.names[0].toLowerCase()===n1.toLowerCase()))return setErr('Esa persona ya está registrada aquí.',$('#n1'));
   setErr('');busy=true;
-  const btn=$('#submitBtn'),label=btn.textContent;btn.disabled=true;btn.textContent='Generando…';
-  const e={code:newCode(),status:asiste==='si'?'yes':'no',names,count,phone};
+  const btn=$('#submitBtn');btn.disabled=true;btn.textContent='Generando…';
+  const e={code:newCode(),status:asiste==='si'?'yes':'no',names:[n1],count:asiste==='si'?1:0};
   try{
-    if(e.status==='yes')await renderTicket(e);   // comprueba que el QR se puede generar antes de guardar
-    const saved=await saveRemote(e);
-    entry=e;store.set(Object.assign({saved},e));
-    await show(e,saved);
-    $('#confirmar').scrollIntoView({block:'start'});
+    if(e.status==='yes')cache.set(e.code,await renderTicket(e));
+    list.push(e);store.set(list);adding=false;form.reset();
+    await render();
+    const last=$('#tickets').lastElementChild;if(last)last.scrollIntoView({block:'start'});
   }catch(_){
     setErr('No pudimos generar el QR. Recarga la página e inténtalo de nuevo.');
-  }finally{busy=false;btn.disabled=false;btn.textContent=label}
+  }finally{busy=false;btn.disabled=false;syncForm()}
 });
-$('#dlBtn').addEventListener('click',async()=>{
-  if(!lastBlob)return;
-  const d=await capP.dl;
-  if(d){try{await d.save({filename:'entrada-fiesta-50.png',data:lastBlob})}catch(_){}return}
-  const u=URL.createObjectURL(lastBlob),a=document.createElement('a');
-  a.href=u;a.download='entrada-fiesta-50.png';document.body.appendChild(a);a.click();a.remove();
-  setTimeout(()=>URL.revokeObjectURL(u),4000);
-});
-async function change(){
-  const prev=entry||store.get();
-  await removeRemote();store.del();entry=null;
-  $('#ticketBox').hidden=true;$('#declinedBox').hidden=true;
-  form.hidden=false;$('#rsvpLead').hidden=false;
-  if(prev){
-    (prev.status==='yes'?$('#asSi'):$('#asNo')).checked=true;
-    $('#n1').value=prev.names[0]||'';
-    if(prev.names[1]){$('#c2').checked=true;$('#n2').value=prev.names[1]}
-    $('#tel').value=prev.phone||'';
-  }
-  syncForm();$('#n1').focus();
-}
-$('#changeBtn').addEventListener('click',change);
-$('#changeBtn2').addEventListener('click',change);
-const prior=store.get();
-if(prior&&prior.code&&Array.isArray(prior.names)){entry=prior;show(prior,!!prior.saved).catch(()=>{form.hidden=false;$('#rsvpLead').hidden=false})}
+$('#addBtn').addEventListener('click',()=>{adding=true;render().then(()=>$('#n1').focus())});
+$('#cancelAdd').addEventListener('click',()=>{adding=false;setErr('');render()});
+list=store.get();syncForm();render();
 
 /* ====== Control de acceso (solo anfitriona) ====== */
 Promise.all([capP.db,capP.user]).then(async([db,user])=>{
