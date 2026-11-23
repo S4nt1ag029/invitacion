@@ -257,13 +257,13 @@ img{max-width:100%}
 
   <section class="rsvp" id="confirmar" aria-labelledby="rsvpTitle">
     <h2 id="rsvpTitle">Confirma tu asistencia</h2>
-    <p class="lead" id="rsvpLead">Cada persona confirma con su propio nombre y recibe su código QR para entrar a la fiesta. </p>
-    <p class="must" id="rsvpMust">Es muy importante confirmar tu asistencia. </p>
+    <p class="lead" id="rsvpLead">Cada persona confirma con su propio nombre y recibe su código QR para entrar a la fiesta.</p>
+    <p class="must" id="rsvpMust">Es muy importante confirmar tu asistencia.</p>
 
     <div id="tickets"></div>
 
     <form id="rsvpForm" novalidate>
-      <p class="whostep" id="whoStep" hidden>Registra ahora a la segunda persona, con su propio nombre.</p>
+      <p class="whostep" id="whoStep" hidden>Si va otra persona, regístrala aquí con su propio nombre.</p>
       <fieldset class="field">
         <legend>¿Podrás acompañarnos?</legend>
         <div class="seg">
@@ -277,11 +277,9 @@ img{max-width:100%}
       </div>
       <p class="err" id="formErr" role="alert"></p>
       <button class="btn" type="submit" id="submitBtn">Confirmar</button>
-      <button class="link" type="button" id="cancelAdd" hidden>Cancelar</button>
     </form>
 
-    <button class="btn ghost" type="button" id="addBtn" hidden>Registrar a otra persona</button>
-    <p class="hint" id="limitNote" hidden>Esta invitación ya tiene 2 personas registradas, que es el máximo.</p>
+    <p class="hint" id="limitNote" hidden></p>
   </section>
 
   <div class="garland" id="garlandBottom" aria-hidden="true"></div>
@@ -459,7 +457,7 @@ async function renderTicket(e){
 }
 
 /* ====== Formulario ====== */
-const MAX=2,KEY='f50_tickets_v2';
+const MAX=Infinity,KEY='f50_tickets_v2';
 const form=$('#rsvpForm');
 let list=[],adding=false,busy=false,seq=0;
 const cache=new Map();
@@ -514,7 +512,7 @@ async function card(e,i){
     if(link){const s=el('div','stack');s.style.marginTop='16px';s.appendChild(ext(link,'Registrar mi respuesta'));d.appendChild(s)}
   }
   const r=el('button','link',e.status==='yes'?'Quitar esta confirmación':'Cambié de opinión');r.type='button';
-  r.addEventListener('click',()=>{list=list.filter(x=>x.code!==e.code);store.set(list);adding=false;render()});
+  r.addEventListener('click',()=>{list=list.filter(x=>x.code!==e.code);store.set(list);adding=list.length>0&&list.length<MAX;render()});
   d.appendChild(r);
   return d;
 }
@@ -526,13 +524,13 @@ async function render(){
   const box=$('#tickets');box.textContent='';cards.forEach(c=>box.appendChild(c));
   form.hidden=!(list.length===0||adding);
   $('#rsvpLead').hidden=list.length>0;
-  $('#whoStep').hidden=!adding;$('#cancelAdd').hidden=!adding;
-  $('#addBtn').hidden=!(list.length>0&&list.length<MAX&&!adding);
-  $('#limitNote').hidden=list.length<MAX;
+  $('#whoStep').hidden=!adding;
+  const note=$('#limitNote');
+  note.hidden=!(list.length>=MAX||(list.length>0&&!adding));
+  note.textContent='¿Va otra persona contigo? Vuelve a abrir este enlace y regístrala con su propio nombre.';
 }
 form.addEventListener('submit',async ev=>{
   ev.preventDefault();if(busy)return;
-  if(list.length>=MAX)return setErr('Ya registraste el máximo de 2 personas.');
   const asiste=(form.querySelector('input[name=asiste]:checked')||{}).value;
   const n1=clean($('#n1').value);
   if(!asiste)return setErr('Elige si podrás asistir.',$('#asSi'));
@@ -550,9 +548,7 @@ form.addEventListener('submit',async ev=>{
     setErr('No pudimos generar el QR. Recarga la página e inténtalo de nuevo.');
   }finally{busy=false;btn.disabled=false;syncForm()}
 });
-$('#addBtn').addEventListener('click',()=>{adding=true;render().then(()=>$('#n1').focus())});
-$('#cancelAdd').addEventListener('click',()=>{adding=false;setErr('');render()});
-list=store.get();syncForm();render();
+list=store.get();adding=list.length>0&&list.length<MAX;syncForm();render();
 
 /* ====== Control de acceso (solo anfitriona) ====== */
 Promise.all([capP.db,capP.user]).then(async([db,user])=>{
